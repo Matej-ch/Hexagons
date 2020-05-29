@@ -1,9 +1,7 @@
 <template>
   <div id="app">
     <div class="hexagon-wrapper">
-      <Hexagon/>
-      <Hexagon/>
-      <Hexagon/>
+      <Hexagon v-for="hexagon in hexagons" :key="hexagon.id" :parentData="hexagon"/>
     </div>
 
   </div>
@@ -16,6 +14,29 @@ export default {
   name: 'App',
   components: {
     Hexagon
+  },
+  mounted: function() {
+    this.hexagons = this.generateHexagons(20);
+  },
+  data: function() {
+    return {
+      hexagons: [],
+      colors: ['h-color2','h-color1','h-color3']
+    }
+  },
+  methods: {
+    generateHexagons: function (objectCount) {
+      let objects = [];
+      for (let i = 0; i < objectCount; i++) {
+        let tempObj = {
+          id:i,
+          color: this.colors[Math.floor(Math.random() * this.colors.length)]
+        };
+        objects.push(tempObj);
+      }
+
+      return objects;
+    }
   }
 }
 </script>
@@ -41,17 +62,11 @@ export default {
   }
 
   .hexagon-wrapper {
-    width: 1000px;
+    width: 100%;
+    padding: 30px;
     overflow: hidden;
-    padding-bottom: 70px;
     position: relative;
     margin: 0 auto;
-    margin-bottom: 2.5em;
-    -webkit-transition: all ease 500ms;
-    -moz-transition: all ease 500ms;
-    -o-transition: all ease 500ms;
-
-    transition: all ease 500ms;
 
   }
 </style>
