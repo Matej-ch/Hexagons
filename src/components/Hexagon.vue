@@ -16,50 +16,36 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-
-  .hexagon {
-    width: 100px;
-    height: 55px;
-    position: relative;
-  }
-
   .hexagon-wrapper {
     padding-right: 5px;
     padding-bottom: 30px;
     padding-top: 30px;
-  }
-
-  .hexagon,
-  .hexagon:before,
-  .hexagon:after {
-    box-shadow: 0 0 10px rgba(0,0,0,0.8);
-  }
-
-  .hexagon:before,
-  .hexagon:after {
-    content: "";
-    position: absolute;
-    left: 22px;
-    width: 57px;
-    height: 57px;
-    transform: rotate(145deg) skew(22.5deg);
+    position: relative;
   }
 
   .hexagon:before {
-    top: -29px;
+    content: " ";
+    width: 0; height: 0;
+    border-left: 52px solid transparent;
+    border-right: 52px solid transparent;
+    position: absolute;
+    top: -30px;
+  }
+
+  .hexagon {
+    margin-top: 30px;
+    width: 104px;
+    height: 60px;
+    position: relative;
   }
 
   .hexagon:after {
-    top: 27px;
-  }
-
-  .hexagon span {
+    content: "";
+    width: 0;
     position: absolute;
-    top: 0;
-    left: 0;
-    width: 100px;
-    height: 55px;
-    z-index: 1;
+    bottom: -30px;
+    border-left: 52px solid transparent;
+    border-right: 52px solid transparent;
   }
 
   /*.hexa_item:hover {
@@ -76,13 +62,24 @@ export default {
             10px 0 80px #0ff;         !* outer right cyan *!
   }*/
 
-  .h-color1,.h-color1:before,.h-color1:after {
+  .h-color1 {
     box-shadow: inset 0 0 0 200px #D9A036;
   }
-  .h-color2,.h-color2:before,.h-color2:after {
+
+  .h-color1:before { border-bottom: 30px solid #D9A036; }
+  .h-color1:after { border-top: 30px solid #D9A036; }
+
+  .h-color2 {
     box-shadow: inset 0 0 0 200px #8C6723;
   }
-  .h-color3,.h-color3:before,.h-color3:after {
+
+  .h-color2:before { border-bottom: 30px solid #8C6723; }
+  .h-color2:after { border-top: 30px solid #8C6723; }
+
+  .h-color3 {
     box-shadow: inset 0 0 0 200px #403014;
   }
+
+  .h-color3:before { border-bottom: 30px solid #403014; }
+  .h-color3:after { border-top: 30px solid #403014; }
 </style>

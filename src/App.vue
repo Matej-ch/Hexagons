@@ -68,8 +68,10 @@ export default {
 
   .hexagons-wrapper {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
-    grid-gap: 1rem;
-
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr) [col-start]);
+    row-gap: 10px;
+    column-gap:10px;
+    padding: 15px;
+    justify-items: center;
   }
 </style>
