@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <div class="hexagon-wrapper">
+    <div class="hexagons-wrapper">
       <Hexagon v-for="hexagon in hexagons" :key="hexagon.id" :parentData="hexagon"/>
     </div>
 
@@ -30,12 +30,18 @@ export default {
       for (let i = 0; i < objectCount; i++) {
         let tempObj = {
           id:i,
+          value: this.getRandomNumber(1,20),
           color: this.colors[Math.floor(Math.random() * this.colors.length)]
         };
         objects.push(tempObj);
       }
 
       return objects;
+    },
+    getRandomNumber: function (min,max) {
+      min = Math.ceil(min);
+      max = Math.floor(max);
+      return Math.floor(Math.random() * (max - min)) + min;
     }
   }
 }
@@ -49,7 +55,6 @@ export default {
     font-family: Avenir, Helvetica, Arial, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    text-align: center;
     color: #2c3e50;
     height: 100%;
 }
@@ -61,12 +66,10 @@ export default {
     background-size: cover;
   }
 
-  .hexagon-wrapper {
-    width: 100%;
-    padding: 30px;
-    overflow: hidden;
-    position: relative;
-    margin: 0 auto;
+  .hexagons-wrapper {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+    grid-gap: 1rem;
 
   }
 </style>
