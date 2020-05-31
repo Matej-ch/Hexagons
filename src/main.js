@@ -7,9 +7,20 @@ Vue.config.productionTip = false
 Vue.use(Vuex)
 
 const store = new Vuex.Store({
-  state : {
+  state: {
     firstPiece: 0,
     secondPiece: 0,
+    score: 0,
+  },
+  mutations: {
+    updateScore(state,payload) {
+      state.score += payload.value;
+    }
+  },
+  actions: {
+    updateScore(context) {
+      context.commit('updateScore');
+    }
   }
 })
 

@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <div class="hexagons-wrapper">
-      <Hexagon v-for="hexagon in hexagons" :key="hexagon.id" :parentData="hexagon"/>
+      <Hexagon v-for="hexagon in hexagons" :key="hexagon.id" :parentData="hexagon" @selected="selected"/>
     </div>
 
   </div>
@@ -42,6 +42,10 @@ export default {
       min = Math.ceil(min);
       max = Math.floor(max);
       return Math.floor(Math.random() * (max - min)) + min;
+    },
+    selected: function (hexagon) {
+      this.$store.commit('updateScore',{value: hexagon.value});
+      //this.$store.dispatch('updateScore');
     }
   }
 }

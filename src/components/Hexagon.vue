@@ -1,6 +1,6 @@
 <template>
   <div class="hexagon-wrapper">
-    <div class="hexagon" :class="parentData.color"><span></span></div>
+    <div class="hexagon" :class="parentData.color" @click="select(parentData)"><span></span></div>
   </div>
 
 </template>
@@ -10,6 +10,11 @@ export default {
   name: 'Hexagon',
   props: {
     parentData: Object,
+  },
+  methods: {
+    select: function (hexagon) {
+      this.$emit('selected',hexagon)
+    }
   }
 }
 </script>
@@ -48,7 +53,11 @@ export default {
     border-right: 52px solid transparent;
   }
 
-  /*.hexa_item:hover {
+  .hexagon:hover {
+    cursor: pointer;
+  }
+
+  /*.hexagon:hover {
     !*box-shadow: 0 0 40px 20px #fff, 0 0 100px 50px #ff0;*!
 
     box-shadow:
