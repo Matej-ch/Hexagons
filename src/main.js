@@ -18,8 +18,8 @@ const store = new Vuex.Store({
     }
   },
   actions: {
-    updateScore(context) {
-      context.commit('updateScore');
+    updateScore({commit}, payload) {
+      commit('updateScore',payload);
     }
   }
 })

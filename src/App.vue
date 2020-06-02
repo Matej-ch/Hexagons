@@ -44,8 +44,7 @@ export default {
       return Math.floor(Math.random() * (max - min)) + min;
     },
     selected: function (hexagon) {
-      this.$store.commit('updateScore',{value: hexagon.value});
-      //this.$store.dispatch('updateScore');
+      this.$store.dispatch('updateScore',{value: hexagon.value});
     }
   }
 }
