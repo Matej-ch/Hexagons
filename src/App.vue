@@ -4,6 +4,7 @@
       <Hexagon v-for="hexagon in hexagons" :key="hexagon.id" :parentData="hexagon" @selected="selected"/>
     </div>
 
+    <div class="score">Score: {{score}}</div>
   </div>
 </template>
 
@@ -24,13 +25,24 @@ export default {
       colors: ['h-color2','h-color1','h-color3']
     }
   },
+  computed: {
+    score() {
+      return this.$store.state.score;
+    },
+    first() {
+      return this.$store.state.first_piece;
+    },
+    second() {
+      return this.$store.state.second_piece;
+    },
+  },
   methods: {
     generateHexagons: function (objectCount) {
       let objects = [];
       for (let i = 0; i < objectCount; i++) {
         let tempObj = {
           id:i,
-          value: this.getRandomNumber(1,20),
+          value: this.getRandomNumber(1,5),
           color: this.colors[Math.floor(Math.random() * this.colors.length)]
         };
         objects.push(tempObj);
@@ -44,7 +56,32 @@ export default {
       return Math.floor(Math.random() * (max - min)) + min;
     },
     selected: function (hexagon) {
-      this.$store.dispatch('updateScore',{value: hexagon.value});
+
+      if(!this.first) {
+        this.$store.dispatch('selectHexagon',{hexagon: hexagon,position:1});
+        return;
+      }
+
+      if(!this.second) {
+        this.$store.dispatch('selectHexagon',{hexagon: hexagon,position:2});
+      }
+
+      if(this.first && this.second) {
+        this.checkScore();
+      }
+    },
+    checkScore: function () {
+      if(this.first.value === this.second.value) {
+        this.$store.dispatch('updateScore',{value: this.first.value});
+
+        this.hexagons.splice(this.hexagons.indexOf(this.first), 1);
+        this.hexagons.splice(this.hexagons.indexOf(this.second), 1);
+      }
+      this.resetHexagons();
+    },
+    resetHexagons: function () {
+      this.$store.dispatch('selectHexagon',{hexagon: null,position:1});
+      this.$store.dispatch('selectHexagon',{hexagon: null,position:2});
     }
   }
 }
@@ -76,5 +113,17 @@ export default {
     column-gap:10px;
     padding: 15px;
     justify-items: center;
+  }
+
+  .score {
+    background-color: whitesmoke;
+    color: #0f0f0f;
+    padding: 15px;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    border-top: 1px solid #8C6723;
+    box-shadow: inset 0 0 2px #8C6723;
+    font-weight: bold;
   }
 </style>

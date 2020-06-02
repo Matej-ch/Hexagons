@@ -8,18 +8,28 @@ Vue.use(Vuex)
 
 const store = new Vuex.Store({
   state: {
-    firstPiece: 0,
-    secondPiece: 0,
+    first_piece: null,
+    second_piece: null,
     score: 0,
   },
   mutations: {
     updateScore(state,payload) {
       state.score += payload.value;
+    },
+    selectHexagon(state,payload) {
+      if(payload.position === 1) {
+        state.first_piece = payload.hexagon;
+      } else {
+        state.second_piece = payload.hexagon;
+      }
     }
   },
   actions: {
     updateScore({commit}, payload) {
       commit('updateScore',payload);
+    },
+    selectHexagon({commit}, payload) {
+      commit('selectHexagon',payload);
     }
   }
 })
