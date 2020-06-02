@@ -42,7 +42,7 @@ export default {
       for (let i = 0; i < objectCount; i++) {
         let tempObj = {
           id:i,
-          value: this.getRandomNumber(1,5),
+          value: this.getRandomNumber(1,20),
           color: this.colors[Math.floor(Math.random() * this.colors.length)]
         };
         objects.push(tempObj);
