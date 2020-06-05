@@ -38,23 +38,51 @@ export default {
   },
   methods: {
     generateHexagons: function (objectCount) {
-      let objects = [];
-      for (let i = 0; i < objectCount; i++) {
-        let tempObj = {
+      let cards = [];
+      let value = 1;
+      for (let i = 0; i < objectCount; i += 2) {
+
+        let firstObj = {
           id:i,
-          value: this.getRandomNumber(1,20),
+          value: value,
           color: this.colors[Math.floor(Math.random() * this.colors.length)]
         };
-        objects.push(tempObj);
+        let secondObj = {
+          id: i + 1,
+          value: value,
+          color: this.colors[Math.floor(Math.random() * this.colors.length)]
+        };
+        cards.push(firstObj);
+        cards.push(secondObj);
+        value++;
       }
 
-      return objects;
+      return this.shuffle(cards);
+    },
+    shuffle: function (cards) {
+      let currentIndex = cards.length, temporaryValue, randomIndex;
+
+      // While there remain elements to shuffle...
+      while (0 !== currentIndex) {
+
+        // Pick a remaining element...
+        randomIndex = Math.floor(Math.random() * currentIndex);
+        currentIndex -= 1;
+
+        // And swap it with the current element.
+        temporaryValue = cards[currentIndex];
+        cards[currentIndex] = cards[randomIndex];
+        cards[randomIndex] = temporaryValue;
+      }
+      return cards;
+
     },
     getRandomNumber: function (min,max) {
       min = Math.ceil(min);
       max = Math.floor(max);
       return Math.floor(Math.random() * (max - min)) + min;
     },
+
     selected: function (hexagon) {
 
       if(!this.first) {
@@ -110,7 +138,7 @@ export default {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(100px, 1fr) [col-start]);
     row-gap: 10px;
-    column-gap:10px;
+    column-gap:80px;
     padding: 15px;
     justify-items: center;
   }
