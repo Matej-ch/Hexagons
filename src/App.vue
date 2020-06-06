@@ -3,7 +3,6 @@
     <div class="hexagons-wrapper">
       <Hexagon v-for="hexagon in hexagons" :key="hexagon.id" :parentData="hexagon" @selected="selected"/>
     </div>
-
     <div class="score">Score: {{score}}</div>
   </div>
 </template>
@@ -22,7 +21,8 @@ export default {
   data: function() {
     return {
       hexagons: [],
-      colors: ['h-color2','h-color1','h-color3']
+      colors: ['h-color2','h-color1','h-color3'],
+      tempCount: 0,
     }
   },
   computed: {
@@ -45,11 +45,13 @@ export default {
         let firstObj = {
           id:i,
           value: value,
+          showValue: false,
           color: this.colors[Math.floor(Math.random() * this.colors.length)]
         };
         let secondObj = {
           id: i + 1,
           value: value,
+          showValue: false,
           color: this.colors[Math.floor(Math.random() * this.colors.length)]
         };
         cards.push(firstObj);
@@ -77,21 +79,30 @@ export default {
       return cards;
 
     },
-    getRandomNumber: function (min,max) {
-      min = Math.ceil(min);
-      max = Math.floor(max);
-      return Math.floor(Math.random() * (max - min)) + min;
-    },
-
     selected: function (hexagon) {
 
       if(!this.first) {
         this.$store.dispatch('selectHexagon',{hexagon: hexagon,position:1});
+        hexagon.showValue = true;
+        this.tempCount++;
+
+        console.log(this.tempCount);
+        if(this.tempCount % 3 === 0 || this.tempCount % 2 === 0) {
+          this.hexagons.forEach(function(hexaItem) {
+            if(hexaItem.id !== hexagon.id) {
+              hexaItem.showValue = false;
+            }
+          });
+          this.tempCount = 0;
+        }
+
         return;
       }
 
       if(!this.second) {
         this.$store.dispatch('selectHexagon',{hexagon: hexagon,position:2});
+        hexagon.showValue = true;
+        this.tempCount++;
       }
 
       if(this.first && this.second) {
@@ -104,7 +115,11 @@ export default {
 
         this.hexagons.splice(this.hexagons.indexOf(this.first), 1);
         this.hexagons.splice(this.hexagons.indexOf(this.second), 1);
+        this.tempCount = 0;
+      } else {
+        this.$store.dispatch('updateScore',{value: -1});
       }
+
       this.resetHexagons();
     },
     resetHexagons: function () {

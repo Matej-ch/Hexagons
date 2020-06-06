@@ -1,6 +1,10 @@
 <template>
   <div class="hexagon-wrapper">
-    <div class="hexagon" :class="parentData.color" @click="select(parentData)"><span></span></div>
+    <div class="hexagon" :class="parentData.color" @click="select(parentData)">
+      <transition name="fade">
+        <span v-if="parentData.showValue" class="value-span">{{parentData.value}}</span>
+      </transition>
+    </div>
   </div>
 
 </template>
@@ -13,9 +17,9 @@ export default {
   },
   methods: {
     select: function (hexagon) {
-      this.$emit('selected',hexagon)
+      this.$emit('selected',hexagon);
     }
-  }
+  },
 }
 </script>
 
@@ -86,4 +90,20 @@ export default {
 
   .h-color3::before { border-bottom: 30px solid #403014; }
   .h-color3::after { border-top: 30px solid #403014; }
+
+  .value-span {
+    position: absolute;
+    font-weight: bold;
+    color: black;
+    font-size: 2em;
+    left: 40px;
+    padding-top: 12px;
+  }
+
+  .fade-enter-active, .fade-leave-active {
+    transition: opacity .5s;
+  }
+  .fade-enter, .fade-leave-to {
+    opacity: 0;
+  }
 </style>
