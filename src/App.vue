@@ -1,8 +1,8 @@
 <template>
   <div id="app">
-    <div class="hexagons-wrapper">
+    <transition-group name="show-hexagons" tag="div" class="hexagons-wrapper">
       <Hexagon v-for="hexagon in hexagons" :key="hexagon.id" :parentData="hexagon" @selected="selected"/>
-    </div>
+    </transition-group>
     <div class="score">Score: {{score}}</div>
   </div>
 </template>
@@ -86,7 +86,6 @@ export default {
         hexagon.showValue = true;
         this.tempCount++;
 
-        console.log(this.tempCount);
         if(this.tempCount % 3 === 0 || this.tempCount % 2 === 0) {
           this.hexagons.forEach(function(hexaItem) {
             if(hexaItem.id !== hexagon.id) {
@@ -168,5 +167,16 @@ export default {
     border-top: 1px solid #8C6723;
     box-shadow: inset 0 0 2px #8C6723;
     font-weight: bold;
+  }
+
+  .show-hexagons-enter-active, .show-hexagons-leave-active {
+    transition: opacity .5s;
+  }
+  .show-hexagons-enter, .show-hexagons-leave-to {
+    opacity: 0;
+  }
+
+  .show-hexagons-move {
+    transition: opacity 1s;
   }
 </style>
