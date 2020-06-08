@@ -16,6 +16,9 @@ const store = new Vuex.Store({
     updateScore(state,payload) {
       state.score += payload.value;
     },
+    resetScore(state) {
+      state.score = 0;
+    },
     selectHexagon(state,payload) {
       if(payload.position === 1) {
         state.first_piece = payload.hexagon;
@@ -30,6 +33,9 @@ const store = new Vuex.Store({
     },
     selectHexagon({commit}, payload) {
       commit('selectHexagon',payload);
+    },
+    resetScore({commit}) {
+      commit('resetScore');
     }
   }
 })

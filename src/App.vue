@@ -3,7 +3,9 @@
     <transition-group name="show-hexagons" tag="div" class="hexagons-wrapper">
       <Hexagon v-for="hexagon in hexagons" :key="hexagon.id" :parentData="hexagon" @selected="selected"/>
     </transition-group>
-    <div class="score">Score: {{score}}</div>
+    <div class="score">Score: {{score}}
+    <button class="reset" @click="restartGame" style="float: right">Restart game</button>
+    </div>
   </div>
 </template>
 
@@ -124,6 +126,11 @@ export default {
     resetHexagons: function () {
       this.$store.dispatch('selectHexagon',{hexagon: null,position:1});
       this.$store.dispatch('selectHexagon',{hexagon: null,position:2});
+    },
+    restartGame: function () {
+      this.hexagons = this.generateHexagons(20);
+      this.resetHexagons();
+      this.$store.dispatch('resetScore');
     }
   }
 }
