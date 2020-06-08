@@ -8,5 +8,6 @@ By finding match of two pieces, je get number of points shown on piece.
 
 For flipping incorrect pieces , you get -1 point
 
+Try it [here](https://musing-curie-fbb467.netlify.app)
 
 ![hexagon_game](hexagon%20game.jpg)
