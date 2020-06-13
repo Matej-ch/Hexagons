@@ -48,13 +48,13 @@ export default {
           id:i,
           value: value,
           showValue: false,
-          color: this.colors[Math.floor(Math.random() * this.colors.length)]
+          color: this.colors[Math.floor(Math.random() * this.colors.length)],
         };
         let secondObj = {
           id: i + 1,
           value: value,
           showValue: false,
-          color: this.colors[Math.floor(Math.random() * this.colors.length)]
+          color: this.colors[Math.floor(Math.random() * this.colors.length)],
         };
         cards.push(firstObj);
         cards.push(secondObj);
@@ -101,6 +101,9 @@ export default {
       }
 
       if(!this.second) {
+
+        if(hexagon === this.first) { return; }
+
         this.$store.dispatch('selectHexagon',{hexagon: hexagon,position:2});
         hexagon.showValue = true;
         this.tempCount++;
