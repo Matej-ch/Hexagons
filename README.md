@@ -13,4 +13,4 @@ For flipping incorrect pieces , you get -1 point
 
 Try it [here](https://musing-curie-fbb467.netlify.app)
 
-![hexagon_game](hexagon%20game.jpg)
+![hexagon_game](readme/hexagon%20game.jpg)
