@@ -1,12 +1,17 @@
-import Vue from 'vue'
+import { createApp } from 'vue'
+import App from './App.vue'
+
+createApp(App).mount('#app')
+
+/*import Vue from 'vue'
 import App from './App.vue'
 import Vuex from 'vuex'
 
 Vue.config.productionTip = false
 
-Vue.use(Vuex)
+Vue.use(Vuex)*/
 
-const store = new Vuex.Store({
+/*const store = new Vuex.Store({
   state: {
     first_piece: null,
     second_piece: null,
@@ -38,9 +43,9 @@ const store = new Vuex.Store({
       commit('resetScore');
     }
   }
-})
+})*/
 
-new Vue({
+/*new Vue({
   render: h => h(App),
   store: store,
-}).$mount('#app')
+}).$mount('#app')*/

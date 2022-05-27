@@ -6,7 +6,7 @@
     </div>
 </template>
 
-<script>
+<script setup>
 export default {
     name: 'Hexagon',
     props: {

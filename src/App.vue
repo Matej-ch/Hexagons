@@ -14,7 +14,7 @@
 
 </template>
 
-<script>
+<script setup>
 import Hexagon from './components/Hexagon.vue'
 
 export default {
