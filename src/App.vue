@@ -2,7 +2,10 @@
     <div>
         <div id="app">
             <transition-group name="show-hexagons" tag="div" class="hexagons-wrapper">
-                <Hexagon v-for="hexagon in hexagons" :key="hexagon.id" :parentData="hexagon" @selected="selected"/>
+                <Hexagon v-for="hexagon in hexagons"
+                         :key="hexagon.id"
+                         :parentData="hexagon"
+                         @selected="selected"/>
             </transition-group>
         </div>
 
@@ -72,7 +75,7 @@ function shuffle(cards) {
 
 function checkScore() {
 
-    if (gameState.firstPiece === gameState.secondPiece) {
+    if (gameState.firstPiece.value === gameState.secondPiece.value) {
         gameState.updateScore(gameState.firstPiece.value);
         hexagons.value.splice(hexagons.value.indexOf(gameState.firstPiece), 1);
         hexagons.value.splice(hexagons.value.indexOf(gameState.secondPiece), 1);
