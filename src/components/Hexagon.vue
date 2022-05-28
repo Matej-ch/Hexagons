@@ -1,7 +1,7 @@
 <template>
-    <div class="hexagon" :class="parentData.color" @click="select(parentData)">
+    <div class="hexagon" :class="props.parentData.color" @click="select(parentData)">
         <transition name="fade">
-            <span v-if="parentData.showValue" class="value-span">{{parentData.value}}</span>
+            <span v-if="props.parentData.showValue" class="value-span">{{props.parentData.value}}</span>
         </transition>
     </div>
 </template>
@@ -15,7 +15,7 @@ const props = defineProps({
 const emit = defineEmits(['selected'])
 
 function select(hexagon) {
- emit('selected', hexagon)
+    emit('selected', hexagon)
 }
 
 </script>

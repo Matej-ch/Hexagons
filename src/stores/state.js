@@ -1,13 +1,16 @@
 import {defineStore} from 'pinia'
 
 export const useGameStore = defineStore('game', {
-    state: () => ({
-        hexagons: [],
-        firstPiece: null,
-        secondPiece: null,
-        score: 0,
-        colors: ['h-color2', 'h-color1', 'h-color3']
-    }),
+    state: () => {
+        return {
+            hexagons: [],
+            firstPiece: null,
+            secondPiece: null,
+            score: 0,
+            colors: ['h-color2', 'h-color1', 'h-color3']
+        }
+
+    },
     getters: {
         currentScore: (state) => state.score,
     },
@@ -16,7 +19,7 @@ export const useGameStore = defineStore('game', {
             this.score += value;
         },
         resetScore() {
-            this.score += 0;
+            this.score = 0;
         },
         resetHexagons() {
             this.firstPiece = null;

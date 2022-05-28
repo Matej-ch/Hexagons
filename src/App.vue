@@ -81,16 +81,12 @@ function checkScore() {
         gameState.updateScore(-1);
     }
 
-    resetHexagons();
-}
-
-function resetHexagons() {
     gameState.resetHexagons();
 }
 
 function restartGame() {
-    hexagons.value = generateHexagons(20);
-    resetHexagons();
+    hexagons.value = generateHexagons(40);
+    gameState.resetHexagons();
     gameState.resetScore();
 }
 
