@@ -6,7 +6,7 @@
             </transition-group>
         </div>
 
-        <div class="score">Score: {{score}}
+        <div class="score">Score: {{gameState.currentScore}}
             <button class="reset" @click="restartGame" style="float: right">Restart game</button>
         </div>
     </div>
@@ -15,34 +15,19 @@
 
 <script setup>
 import Hexagon from './components/Hexagon.vue'
-import {ref, onMounted, computed} from "vue";
+import {ref, onMounted} from "vue"
+import {useGameStore} from "./stores/state";
+
+const gameState = useGameStore();
 
 const hexagons = ref();
-const colors = ['h-color2', 'h-color1', 'h-color3'];
 const tempCount = ref(0);
-const scorePoints = ref(0);
-const firstPiece = ref(null);
-const secondPiece = ref(null);
-
-
-const score = computed(() => {
-    return scorePoints.value
-});
-
-const first = computed(() => {
-    return firstPiece.value
-});
-
-const second = computed(() => {
-    return secondPiece.value
-});
 
 onMounted(() => {
     hexagons.value = generateHexagons(40);
 });
 
-function generateHexagons(objectCount)
-{
+function generateHexagons(objectCount) {
     let cards = [];
     let value = 1;
     for (let i = 0; i < objectCount; i += 2) {
@@ -51,13 +36,13 @@ function generateHexagons(objectCount)
             id: i,
             value: value,
             showValue: false,
-            color: colors[Math.floor(Math.random() * colors.length)],
+            color: gameState.colors[Math.floor(Math.random() * gameState.colors.length)],
         };
         let secondObj = {
             id: i + 1,
             value: value,
             showValue: false,
-            color: colors[Math.floor(Math.random() * colors.length)],
+            color: gameState.colors[Math.floor(Math.random() * gameState.colors.length)],
         };
         cards.push(firstObj);
         cards.push(secondObj);
@@ -67,8 +52,7 @@ function generateHexagons(objectCount)
     return shuffle(cards);
 }
 
-function shuffle(cards)
-{
+function shuffle(cards) {
     let currentIndex = cards.length, temporaryValue, randomIndex;
 
     // While there remain elements to shuffle...
@@ -87,67 +71,59 @@ function shuffle(cards)
 }
 
 function checkScore() {
-    if (first.value === second.value) {
-        //this.$store.dispatch('updateScore', {value: this.first.value});
 
-        scorePoints.value += first.value;
-        hexagons.value.splice(hexagons.value.indexOf(first), 1);
-        hexagons.value.splice(hexagons.value.indexOf(second), 1);
+    if (gameState.firstPiece === gameState.secondPiece) {
+        gameState.updateScore(gameState.firstPiece.value);
+        hexagons.value.splice(hexagons.value.indexOf(gameState.firstPiece), 1);
+        hexagons.value.splice(hexagons.value.indexOf(gameState.secondPiece), 1);
         tempCount.value = 0;
     } else {
-        scorePoints.value -= 1;
-        //this.$store.dispatch('updateScore', {value: -1});
+        gameState.updateScore(-1);
     }
 
     resetHexagons();
 }
 
 function resetHexagons() {
-    firstPiece.value = null;
-    second.value = null;
-    //this.$store.dispatch('selectHexagon', {hexagon: null, position: 1});
-    //this.$store.dispatch('selectHexagon', {hexagon: null, position: 2});
+    gameState.resetHexagons();
 }
 
 function restartGame() {
     hexagons.value = generateHexagons(20);
     resetHexagons();
-    scorePoints.value = 0;
-    //this.$store.dispatch('resetScore');
+    gameState.resetScore();
 }
 
 function selected(hexagon) {
 
-    if (!first) {
-        firstPiece.value = hexagon;
-        //this.$store.dispatch('selectHexagon', {hexagon: hexagon, position: 1});
+    if (!gameState.firstPiece) {
+        gameState.selectHexagon(hexagon, 1);
         hexagon.showValue = true;
-        this.tempCount++;
+        tempCount.value++;
 
-        if (this.tempCount % 3 === 0 || this.tempCount % 2 === 0) {
+        if (tempCount.value % 3 === 0 || tempCount.value % 2 === 0) {
             hexagons.value.forEach(function (hexaItem) {
                 if (hexaItem.id !== hexagon.id) {
                     hexaItem.showValue = false;
                 }
             });
-            this.tempCount = 0;
+            tempCount.value = 0;
         }
 
         return;
     }
 
-    if (!second) {
+    if (!gameState.secondPiece) {
 
-        if (hexagon === first) {
+        if (hexagon === gameState.firstPiece) {
             return;
         }
-        secondPiece.value = hexagon;
-        //this.$store.dispatch('selectHexagon', {hexagon: hexagon, position: 2});
+        gameState.selectHexagon(hexagon, 2);
         hexagon.showValue = true;
         tempCount.value++;
     }
 
-    if (first && second) {
+    if (gameState.firstPiece && gameState.secondPiece) {
         checkScore();
     }
 }
@@ -184,6 +160,7 @@ body {
     border-top: 1px solid #8C6723;
     box-shadow: inset 0 0 2px #8C6723;
     font-weight: bold;
+    left: 0;
 }
 
 .show-hexagons-enter-active, .show-hexagons-leave-active {
