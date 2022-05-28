@@ -1,9 +1,13 @@
 <template>
-    <div class="hexagon" :class="props.parentData.color" @click="select(parentData)">
+
+    <div class="hexagon color-sass" :class="props.parentData.color" @click="select(parentData)">
         <transition name="fade">
-            <span v-if="props.parentData.showValue" class="value-span">{{props.parentData.value}}</span>
+            <span class="hex-number" v-if="props.parentData.showValue">
+                {{props.parentData.value}}
+            </span>
         </transition>
     </div>
+
 </template>
 
 <script setup>
@@ -20,7 +24,12 @@ function select(hexagon) {
 
 </script>
 
-<style scoped>
+<style scoped lang="scss">
+
+.hex-number {
+    font-weight: bold;
+    font-size: 2rem;
+}
 
 .fade-enter-active, .fade-leave-active {
     transition: opacity .5s;

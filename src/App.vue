@@ -1,19 +1,16 @@
 <template>
-    <div>
-        <div id="app">
-            <transition-group name="show-hexagons" tag="div" class="hexagons-wrapper">
-                <Hexagon v-for="hexagon in hexagons"
-                         :key="hexagon.id"
-                         :parentData="hexagon"
-                         @selected="selected"/>
-            </transition-group>
-        </div>
 
-        <div class="score">Score: {{gameState.currentScore}}
-            <button class="reset" @click="restartGame" style="float: right">Restart game</button>
-        </div>
+
+    <transition-group name="show-hexagons" tag="main" class="hexagon-container">
+        <Hexagon v-for="hexagon in hexagons"
+                 :key="hexagon.id"
+                 :parentData="hexagon"
+                 @selected="selected"/>
+    </transition-group>
+
+    <div class="score">Score: {{gameState.currentScore}}
+        <button class="reset" @click="restartGame" style="float: right">Restart game</button>
     </div>
-
 </template>
 
 <script setup>
@@ -129,16 +126,20 @@ function selected(hexagon) {
 
 </script>
 
-<style>
+<style lang="scss">
 
-@import './assets/styles/main.css';
+@import './assets/styles/main.scss';
 
 #app {
     font-family: Avenir, Helvetica, Arial, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     color: #2c3e50;
-    height: 100%;
+    position: relative;
+    min-height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
 }
 
 body {
@@ -153,13 +154,14 @@ body {
     background-color: whitesmoke;
     color: #0f0f0f;
     padding: 15px;
-    position: absolute;
-    bottom: 0;
     width: 100%;
     border-top: 1px solid #8C6723;
     box-shadow: inset 0 0 2px #8C6723;
     font-weight: bold;
-    left: 0;
+    display: flex;
+    flex-shrink: 0;
+    flex-direction: row;
+    justify-content: space-between;
 }
 
 .show-hexagons-enter-active, .show-hexagons-leave-active {
