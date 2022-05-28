@@ -1,7 +1,6 @@
 # Hexagon game
 
 [![Netlify Status](https://api.netlify.com/api/v1/badges/8d965355-e14c-4e7a-a133-c6991c692bc1/deploy-status)](https://app.netlify.com/sites/musing-curie-fbb467/deploys)
-[![Dependabot](https://badgen.net/badge/Dependabot/enabled/green?icon=dependabot)](https://dependabot.com/)
 
 A simple card matching memory game.
 

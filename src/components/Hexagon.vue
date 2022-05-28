@@ -7,17 +7,17 @@
 </template>
 
 <script setup>
-export default {
-    name: 'Hexagon',
-    props: {
-        parentData: Object,
-    },
-    methods: {
-        select: function (hexagon) {
-            this.$emit('selected', hexagon);
-        }
-    },
+
+const props = defineProps({
+    parentData: Object
+})
+
+const emit = defineEmits(['selected'])
+
+function select(hexagon) {
+ emit('selected', hexagon)
 }
+
 </script>
 
 <style scoped>
