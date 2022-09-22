@@ -18,6 +18,12 @@
 
 }
 
+@media only screen and (max-width: 768px) {
+  :root {
+    --hex-width: 50px;
+  }
+}
+
 body {
   margin: 0;
 }
